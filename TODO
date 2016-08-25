@@ -1,1 +1,2 @@
 Can't parameterize arrays so $in is not going to work.
+Parameters are blindly overwritten now, which could allow the user to control them.  For example, if the user supplies a :userID parameter, they could override the one added by the retrieve() methods.
