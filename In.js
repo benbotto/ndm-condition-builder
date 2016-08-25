@@ -1,17 +1,26 @@
 'use strict';
 
-const Comparison = require('./Comparison');
+const Condition = require('./Condition');
 
-class In extends Comparison {
+class In extends Condition {
   /**
    * Create an in comparison.
    * @param column The column name (FQCN).
-   * @param val The value to equate with column.
-   * @param paramName An optional parameter name matching column.
+   * @param vals The array of values to equate with column.
+   * @param paramName An optional parameter name matching column.  Each item in
+   *        the array will be paraterized with its index appended.
    */
-  constructor(column, val, paramName) {
-    // TODO: Can't parameterize the whole array; each item needs a parameter.
-    super('$in', column, val, paramName);
+  constructor(column, vals, paramName) {
+    super();
+
+    paramName = this.createParameterName(column, paramName);
+    this.condition.$in = {[column]: []};
+
+    for (let i = 0; i < vals.length; ++i) {
+      let name = `${paramName}${i}`;
+      this.condition.$in[column].push(`:${name}`);
+      this.params[name] = vals[i];
+    }
   }
 }
 
