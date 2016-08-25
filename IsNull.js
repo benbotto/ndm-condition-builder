@@ -6,9 +6,10 @@ class IsNull extends Comparison {
   /**
    * Create an IS NULL comparison.
    * @param column The column name (FQCN).
+   * @param paramName An optional parameter name matching column.
    */
-  constructor(column) {
-    super('$is', column, null);
+  constructor(column, paramName) {
+    super('$is', column, null, paramName);
   }
 }
 

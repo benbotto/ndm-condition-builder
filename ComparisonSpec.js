@@ -17,5 +17,16 @@ describe('Comparison test suite.', function() {
       new Comparison('foo', 'bar', 'baz');
     }).toThrowError('Invalid comparison type: foo.');
   });
+
+  it('checks an explicit parameter name.', function() {
+    let comp = new Comparison('$eq', 'firstName', 'Ben', ':fname');
+    expect(comp.condition).toEqual({$eq: {'firstName': ':fname'}});
+    expect(comp.params).toEqual({fname: 'Ben'});
+
+    // Colon (:) is optional.
+    comp = new Comparison('$eq', 'firstName', 'Ben', 'fname');
+    expect(comp.condition).toEqual({$eq: {'firstName': ':fname'}});
+    expect(comp.params).toEqual({fname: 'Ben'});
+  });
 });
 
