@@ -1,9 +1,11 @@
 'use strict';
 
+const Condition = require('./Condition');
+
 /**
  * A class that represents a boolean condition (eq, neq, lt, etc.).
  */
-class Comparison {
+class Comparison extends Condition {
   /**
    * Create a basic comparison ($eq, $neq, $lt, etc.).
    * @param type A valid comparison type ($eq, $neq, $lt, $lte, $gt, $gte, $like, $notLike).
@@ -12,22 +14,15 @@ class Comparison {
    * @param paramName A parameter name that matches the column.
    */
   constructor(type, column, val, paramName) {
+    super();
+
     if (Comparison.COMPARISON_TYPES.indexOf(type) === -1)
       throw new Error(`Invalid comparison type: ${type}.`);
 
-    paramName = paramName || column;
+    paramName = this.createParameterName(column, paramName);
 
-    // A leading colon is optional on the parameter name.
-    if (paramName[0] === ':')
-      paramName = paramName.substring(1);
-
-    this.condition = {
-      [type]: {
-        [column]: `:${paramName}`
-      }
-    };
-
-    this.params = {[paramName]: val};
+    this.condition[type]   = {[column]: `:${paramName}`};
+    this.params[paramName] = val;
   }
 }
 

@@ -1,11 +1,12 @@
 'use strict';
 
 const Comparison = require('./Comparison');
+const Condition  = require('./Condition');
 
 /**
  * A class that represents a boolean operator (and,or).
  */
-class BooleanOperator {
+class BooleanOperator extends Condition {
   /**
    * Create a boolean condition.
    * @param type The operator type ($and or $or).
@@ -15,12 +16,13 @@ class BooleanOperator {
    *        raised.
    */
   constructor(type, condition) {
+    super();
+
     if (BooleanOperator.BOOLEAN_OPERATORS.indexOf(type) === -1)
       throw new Error(`Invalid boolean operator: ${type}.`);
 
-    this._type     = type;
-    this.condition = {[type]: []};
-    this.params    = {};
+    this._type           = type;
+    this.condition[type] = [];
 
     if (condition)
       this.addCondition(condition);
@@ -47,6 +49,7 @@ class BooleanOperator {
         if (typeof params === 'string')
           params = JSON.parse(params);
 
+        // Parameters are blindly overwritten.
         for (let key in params)
           this.params[key] = params[key];
       }
