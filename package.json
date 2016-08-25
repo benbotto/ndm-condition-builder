@@ -1,0 +1,24 @@
+{
+  "name": "ndm-condition-builder",
+  "version": "1.0.17",
+  "description": "Helper classes for building SQL conditions suitable for use with node-data-mapper.",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt"
+  },
+  "author": "Ben Botto",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/benbotto/ndm-condition-builder.git"
+  },
+  "devDependencies": {
+    "glob": "^5.0.13",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jasmine-nodejs": "^1.4.2"
+  },
+  "dependencies": {
+  }
+}
